@@ -1,9 +1,12 @@
 package application;
 
-import battleship.Ship;
+import battleship.Position;
 import battleship.ShipPosition;
 import battleship.board.BattleshipBoard;
+import battleship.board.BattleshipPosition;
 import utils.IntegerUtil;
+
+import java.util.Scanner;
 
 public class UI {
 
@@ -23,6 +26,16 @@ public class UI {
         for (int i = 0; i < board.getRows(); i++) {
             printRow(i + 1, board.getColumns(), matrix);
         }
+    }
+
+    public static Position readPlayerInput(Scanner sc) {
+        System.out.print("Enter target position: ");
+        String input = sc.next();
+
+        char column = input.charAt(0);
+        int row = Character.getNumericValue(input.charAt(1));
+
+        return new BattleshipPosition(column, row).toPosition();
     }
 
     private static void printRow(int rowIndex, int columns, ShipPosition[][] matrix) {
