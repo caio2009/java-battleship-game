@@ -1,14 +1,11 @@
 package application;
 
 import battleship.Position;
-import battleship.Ship;
-import battleship.ShipPosition;
 import battleship.board.BattleshipBoard;
-import battleship.board.BattleshipPosition;
+import battleship.board.BattleshipBoardException;
 import config.GameConfiguration;
 import engine.BattleshipGame;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Program {
@@ -22,8 +19,13 @@ public class Program {
         UI.printHeader();
         UI.printBattleshipBoard(board, engine.getMatrix());
 
-        Position position = UI.readPlayerInput(sc);
-        System.out.println(position);
+        try {
+            Position position = UI.readPlayerTargetPosition(sc);
+            System.out.println(position);
+        }
+        catch (BattleshipBoardException e) {
+            System.out.println(e.getMessage());
+        }
 
         sc.close();
     }

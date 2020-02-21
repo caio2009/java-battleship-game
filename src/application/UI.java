@@ -3,6 +3,7 @@ package application;
 import battleship.Position;
 import battleship.ShipPosition;
 import battleship.board.BattleshipBoard;
+import battleship.board.BattleshipBoardException;
 import battleship.board.BattleshipPosition;
 import utils.IntegerUtil;
 
@@ -28,14 +29,19 @@ public class UI {
         }
     }
 
-    public static Position readPlayerInput(Scanner sc) {
-        System.out.print("Enter target position: ");
-        String input = sc.next();
+    public static Position readPlayerTargetPosition(Scanner sc) {
+        try {
+            System.out.print("Enter target position: ");
+            String input = sc.next();
 
-        char column = input.charAt(0);
-        int row = Character.getNumericValue(input.charAt(1));
+            char column = input.charAt(0);
+            int row = Character.getNumericValue(input.charAt(1));
 
-        return new BattleshipPosition(column, row).toPosition();
+            return new BattleshipPosition(column, row).toPosition();
+        }
+        catch (BattleshipBoardException e) {
+            throw new BattleshipBoardException("Invalid position: " + e.getMessage());
+        }
     }
 
     private static void printRow(int rowIndex, int columns, ShipPosition[][] matrix) {
