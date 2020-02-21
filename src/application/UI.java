@@ -43,7 +43,6 @@ public class UI {
             throw new BattleshipBoardException("Invalid position: " + e.getMessage());
         }
     }
-
     private static void printRow(int rowIndex, int columns, ShipPosition[][] matrix) {
         // Aligning the row index to view like this:
         //  1 - - - - -
