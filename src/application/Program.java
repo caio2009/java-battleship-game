@@ -5,6 +5,7 @@ import battleship.board.BattleshipBoard;
 import battleship.board.BattleshipBoardException;
 import config.GameConfiguration;
 import engine.BattleshipGame;
+import engine.BatteshipGameException;
 
 import java.util.Scanner;
 
@@ -24,6 +25,9 @@ public class Program {
             System.out.println(position);
         }
         catch (BattleshipBoardException e) {
+            System.out.println(e.getMessage());
+        }
+        catch (BatteshipGameException e) {
             System.out.println(e.getMessage());
         }
 

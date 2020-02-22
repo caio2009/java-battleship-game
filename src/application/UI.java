@@ -5,6 +5,7 @@ import battleship.ShipPosition;
 import battleship.board.BattleshipBoard;
 import battleship.board.BattleshipBoardException;
 import battleship.board.BattleshipPosition;
+import engine.BatteshipGameException;
 import utils.IntegerUtil;
 
 import java.util.Scanner;
@@ -34,15 +35,20 @@ public class UI {
             System.out.print("Enter target position: ");
             String input = sc.next();
 
-            char column = input.charAt(0);
-            int row = Character.getNumericValue(input.charAt(1));
+            char column = input.substring(0, 1).charAt(0);
+            int row = Integer.parseInt(input.substring(1));
 
             return new BattleshipPosition(column, row).toPosition();
         }
         catch (BattleshipBoardException e) {
-            throw new BattleshipBoardException("Invalid position: " + e.getMessage());
+            // throw new BattleshipBoardException("Invalid position: " + e.getMessage());
+            throw new BatteshipGameException("Problem in reading target position");
+        }
+        catch (NumberFormatException e) {
+            throw new BatteshipGameException("Problem in reading target position");
         }
     }
+
     private static void printRow(int rowIndex, int columns, ShipPosition[][] matrix) {
         // Aligning the row index to view like this:
         //  1 - - - - -
