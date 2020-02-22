@@ -17,7 +17,7 @@ public class UI {
         System.out.println("**********   BATTLESHIP   **********");
     }
 
-    public static void printBattleshipBoard(BattleshipBoard board, ShipPosition[][] matrix) {
+    public static void printBattleshipBoard(BattleshipBoard board) {
         // Set offset to align letters row
         if (!IntegerUtil.isTwoDigit(board.getRows())) printOffset(2);
         else printOffset(3);
@@ -25,7 +25,7 @@ public class UI {
         printLettersRow(board.getColumns());
 
         for (int i = 0; i < board.getRows(); i++) {
-            printRow(i + 1, board.getColumns(), matrix);
+            printRow(i + 1, board.getColumns(), board.getMatrix());
         }
     }
 

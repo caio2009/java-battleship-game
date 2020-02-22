@@ -1,12 +1,14 @@
 package battleship.board;
 
 import battleship.Position;
+import battleship.ShipPosition;
 import config.GameConfiguration;
 
 public class BattleshipBoard {
 
     int rows;
     int columns;
+    ShipPosition[][] matrix = new ShipPosition[GameConfiguration.NUMBER_OF_ROWS][GameConfiguration.NUMBER_OF_COLUMNS];
 
     public BattleshipBoard(int rows, int columns) {
         this.rows = rows;
@@ -33,6 +35,10 @@ public class BattleshipBoard {
 
     public void setColumns(int columns) {
         this.columns = columns;
+    }
+
+    public ShipPosition[][] getMatrix() {
+        return matrix;
     }
 
 }

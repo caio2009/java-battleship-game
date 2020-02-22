@@ -14,10 +14,10 @@ public class Program {
         Scanner sc = new Scanner(System.in);
 
         BattleshipBoard board = new BattleshipBoard(GameConfiguration.NUMBER_OF_ROWS, GameConfiguration.NUMBER_OF_COLUMNS);
-        BattleshipGame engine = new BattleshipGame();
+        BattleshipGame engine = new BattleshipGame(board);
 
         UI.printHeader();
-        UI.printBattleshipBoard(board, engine.getMatrix());
+        UI.printBattleshipBoard(board);
 
         try {
             Position position = UI.readPlayerTargetPosition(sc);
