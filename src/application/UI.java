@@ -15,7 +15,7 @@ public class UI {
     public static final String SPACE = " ";
 
     public static void printHeader() {
-        System.out.println("**********   BATTLESHIP   **********");
+        System.out.println("**********   BATTLESHIP   **********\n");
     }
 
     public static void printBattleshipBoard(BattleshipBoard board) {
@@ -42,10 +42,10 @@ public class UI {
         }
         catch (BattleshipBoardException e) {
             // throw new BattleshipBoardException("Invalid position: " + e.getMessage());
-            throw new BatteshipGameException("Problem in reading target position");
+            throw new BatteshipGameException("Invalid position.");
         }
         catch (NumberFormatException e) {
-            throw new BatteshipGameException("Problem in reading target position");
+            throw new BatteshipGameException("Problem in reading target position.");
         }
     }
 
