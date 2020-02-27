@@ -23,6 +23,10 @@ public class BattleshipPosition {
         return new Position(row - 1, (int) column - 'a');
     }
 
+    public static BattleshipPosition fromPosition(Position position) {
+        return new BattleshipPosition((char)(position.getColumn() + 'a'), position.getRow() + 1);
+    }
+
     public int getRow() {
         return row;
     }
@@ -37,6 +41,10 @@ public class BattleshipPosition {
 
     public void setColumn(char column) {
         this.column = column;
+    }
+
+    public String toString() {
+        return String.valueOf(column) + String.valueOf(row);
     }
 
 }
