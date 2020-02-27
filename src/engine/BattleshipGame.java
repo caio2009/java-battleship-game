@@ -1,5 +1,6 @@
 package engine;
 
+import battleship.Position;
 import battleship.Ship;
 import battleship.ShipPosition;
 import battleship.board.BattleshipBoard;
@@ -18,6 +19,18 @@ public class BattleshipGame {
         this.board = board;
         initShips();
         initShipPositions();
+    }
+
+    public boolean checkPlayerPosition(Position position) {
+        if (!board.positionExists(position)) {
+            throw new BatteshipGameException("Invalid position!");
+        }
+
+        if (board.checkPosition(position) != null) {
+            board.getMatrix()[position.getRow()][position.getColumn()].setMarker(true);
+            return true;
+        }
+        return false;
     }
 
     public List<Ship> getShips() {

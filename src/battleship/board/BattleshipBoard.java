@@ -21,6 +21,10 @@ public class BattleshipBoard {
         return position.getRow() >= 0 && position.getRow() < rows && position.getColumn() >= 0 && position.getColumn() < columns;
     }
 
+    public ShipPosition checkPosition(Position position) {
+        return matrix[position.getRow()][position.getColumn()];
+    }
+
     public int getRows() {
         return rows;
     }
