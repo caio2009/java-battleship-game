@@ -17,36 +17,40 @@ public class Program {
 
         BattleshipBoard board = new BattleshipBoard(GameConfiguration.NUMBER_OF_ROWS, GameConfiguration.NUMBER_OF_COLUMNS);
         BattleshipGame engine = new BattleshipGame(board);
+        String message = "";
 
         while(engine.getShips().size() > 0) {
             UI.clearScreen();
             UI.printHeader();
             UI.printBattleshipBoard(board);
+            UI.printMessage(message);
 
             try {
-                System.out.println();
                 Position position = UI.readPlayerTargetPosition(sc);
-                // System.out.println(position);
 
-                System.out.println();
+                message = ""; // clearing message
+
                 if (engine.checkPlayerPosition(position)) {
-                    System.out.println("A ship position was hitted. In position " + BattleshipPosition.fromPosition(position) + ".");
+                    message += "A ship position was hitted. In position " + BattleshipPosition.fromPosition(position) + ".";
                 }
                 else {
-                    System.out.println("Miss!");
+                    message += "Miss!";
                 }
 
                 engine.checkBattleships();
             }
             catch (BattleshipBoardException e) {
-                System.out.println();
-                System.out.println(e.getMessage());
+                message += e.getMessage();
             }
             catch (BatteshipGameException e) {
-                System.out.println();
-                System.out.println(e.getMessage());
+                message += e.getMessage();
             }
         }
+
+        UI.clearScreen();
+        UI.printHeader();
+        UI.printBattleshipBoard(board);
+        UI.printMessage(message);
 
         sc.close();
     }
