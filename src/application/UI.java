@@ -49,6 +49,11 @@ public class UI {
         }
     }
 
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
     private static void printRow(int rowIndex, int columns, ShipPosition[][] matrix) {
         // Aligning the row index to view like this:
         //  1 - - - - -
