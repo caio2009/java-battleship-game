@@ -34,7 +34,7 @@ public class BattleshipGame {
 
     // Check if battleships were sunk, so add to sunkShips list
     public void checkBattleships() {
-        List<Ship> markedShips = new ArrayList<>();
+        Ship markedShip = null;
 
         for (Ship ship : ships) {
             boolean wasSunk = true;
@@ -42,17 +42,21 @@ public class BattleshipGame {
             for (ShipPosition shipPosition : ship.getShipPositions()) {
                 if (!shipPosition.isMarked()) {
                     wasSunk = false;
+                    break;
                 }
             }
 
             if (wasSunk) {
-                markedShips.add(ship);
+                // check if the ship already have been sunk
+                if (!sunkShips.contains(ship)) {
+                    markedShip = ship;
+                }
             }
         }
 
-        for (Ship ship : markedShips) {
-            ships.remove(ship);
-            sunkShips.remove(ship);
+        if (markedShip != null) {
+            ships.remove(markedShip);
+            sunkShips.add(markedShip);
         }
     }
 
