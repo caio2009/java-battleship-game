@@ -18,10 +18,7 @@ public class Program {
         BattleshipBoard board = new BattleshipBoard(GameConfiguration.NUMBER_OF_ROWS, GameConfiguration.NUMBER_OF_COLUMNS);
         BattleshipGame engine = new BattleshipGame(board);
 
-        int numberOfAttempts = 10;
-        int cont = 0;
-
-        while(cont < numberOfAttempts) {
+        while(engine.getShips().size() > 0) {
             UI.clearScreen();
             UI.printHeader();
             UI.printBattleshipBoard(board);
@@ -38,6 +35,8 @@ public class Program {
                 else {
                     System.out.println("Miss!");
                 }
+
+                engine.checkBattleships();
             }
             catch (BattleshipBoardException e) {
                 System.out.println();
@@ -47,7 +46,6 @@ public class Program {
                 System.out.println();
                 System.out.println(e.getMessage());
             }
-            cont++;
         }
 
         sc.close();
