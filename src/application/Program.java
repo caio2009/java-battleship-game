@@ -18,29 +18,36 @@ public class Program {
         BattleshipBoard board = new BattleshipBoard(GameConfiguration.NUMBER_OF_ROWS, GameConfiguration.NUMBER_OF_COLUMNS);
         BattleshipGame engine = new BattleshipGame(board);
 
-        UI.printHeader();
-        UI.printBattleshipBoard(board);
+        int numberOfAttempts = 10;
+        int cont = 0;
 
-        try {
-            System.out.println();
-            Position position = UI.readPlayerTargetPosition(sc);
-            // System.out.println(position);
+        while(cont < numberOfAttempts) {
+            UI.clearScreen();
+            UI.printHeader();
+            UI.printBattleshipBoard(board);
 
-            System.out.println();
-            if (engine.checkPlayerPosition(position)) {
-                System.out.println("A ship position was hitted. In position " + BattleshipPosition.fromPosition(position) + ".");
+            try {
+                System.out.println();
+                Position position = UI.readPlayerTargetPosition(sc);
+                // System.out.println(position);
+
+                System.out.println();
+                if (engine.checkPlayerPosition(position)) {
+                    System.out.println("A ship position was hitted. In position " + BattleshipPosition.fromPosition(position) + ".");
+                }
+                else {
+                    System.out.println("Miss!");
+                }
             }
-            else {
-                System.out.println("Miss!");
+            catch (BattleshipBoardException e) {
+                System.out.println();
+                System.out.println(e.getMessage());
             }
-        }
-        catch (BattleshipBoardException e) {
-            System.out.println();
-            System.out.println(e.getMessage());
-        }
-        catch (BatteshipGameException e) {
-            System.out.println();
-            System.out.println(e.getMessage());
+            catch (BatteshipGameException e) {
+                System.out.println();
+                System.out.println(e.getMessage());
+            }
+            cont++;
         }
 
         sc.close();
