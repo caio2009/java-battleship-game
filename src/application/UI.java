@@ -26,7 +26,7 @@ public class UI {
         printLettersRow(board.getColumns());
 
         for (int i = 0; i < board.getRows(); i++) {
-            printRow(i + 1, board.getColumns(), board.getMatrix());
+            printRow(i + 1, board.getColumns(), board);
         }
         System.out.println();
     }
@@ -61,7 +61,7 @@ public class UI {
         }
     }
 
-    private static void printRow(int rowIndex, int columns, ShipPosition[][] matrix) {
+    private static void printRow(int rowIndex, int columns, BattleshipBoard board) {
         // Aligning the row index to view like this:
         //  1 - - - - -
         // 10 - - - - -
@@ -76,19 +76,32 @@ public class UI {
             else System.out.print(rowIndex + SPACE);
         }
 
-        printColumns(columns, rowIndex, matrix);
+        printColumns(columns, rowIndex, board);
         System.out.println();
     }
 
-    private static void printColumns(int columns, int row, ShipPosition[][] matrix) {
+    private static void printColumns(int columns, int row, BattleshipBoard board) {
+        ShipPosition[][] matrix = board.getMatrix();
+        boolean[][] playerChoosedPosition = board.getPlayerChoosedPosition();
+
         for (int i = 0; i < columns; i++) {
             if (i == 0) {
-                if (matrix[row - 1][i] != null) System.out.print((matrix[row - 1][i].isMarked() ? "#" : "-"));
-                else System.out.print("-");
+                if (playerChoosedPosition[row - 1][i]) {
+                    if (matrix[row - 1][i] != null) System.out.print((matrix[row - 1][i].isMarked() ? "#" : "-"));
+                    else System.out.print("m");
+                }
+                else {
+                    System.out.print("-");
+                }
             }
             else {
-                if (matrix[row - 1][i] != null) System.out.print((matrix[row - 1][i].isMarked() ? " #" : " -"));
-                else System.out.print(" -");
+                if (playerChoosedPosition[row - 1][i]) {
+                    if (matrix[row - 1][i] != null) System.out.print(SPACE + (matrix[row - 1][i].isMarked() ? "#" : "-"));
+                    else System.out.print(" m");
+                }
+                else {
+                    System.out.print(" -");
+                }
             }
         }
     }

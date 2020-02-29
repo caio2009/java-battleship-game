@@ -25,6 +25,8 @@ public class BattleshipGame {
             throw new BatteshipGameException("Invalid position!");
         }
 
+        board.getPlayerChoosedPosition()[position.getRow()][position.getColumn()] = true;
+
         if (board.checkPosition(position) != null) {
             board.getMatrix()[position.getRow()][position.getColumn()].setMarker(true);
             return true;
