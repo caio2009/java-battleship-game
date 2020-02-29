@@ -3,6 +3,7 @@ package engine;
 import battleship.Position;
 import battleship.Ship;
 import battleship.ShipPosition;
+import battleship.ShipType;
 import battleship.board.BattleshipBoard;
 import battleship.board.BattleshipPosition;
 
@@ -73,6 +74,7 @@ public class BattleshipGame {
     private void initShips() {
         // Instance for tests
         Ship ship = new Ship(
+                ShipType.SUBMARINE,
                 Arrays.asList(
                         new ShipPosition(new BattleshipPosition('a', 1).toPosition()/*, true*/),
                         new ShipPosition(new BattleshipPosition('b', 1).toPosition()/*, true*/),
