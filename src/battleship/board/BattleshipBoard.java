@@ -9,6 +9,7 @@ public class BattleshipBoard {
     int rows;
     int columns;
     ShipPosition[][] matrix = new ShipPosition[GameConfiguration.NUMBER_OF_ROWS][GameConfiguration.NUMBER_OF_COLUMNS];
+    boolean[][] playerChoosedPosition = new boolean[GameConfiguration.NUMBER_OF_ROWS][GameConfiguration.NUMBER_OF_COLUMNS];
 
     public BattleshipBoard(int rows, int columns) {
         this.rows = rows;
@@ -44,5 +45,7 @@ public class BattleshipBoard {
     public ShipPosition[][] getMatrix() {
         return matrix;
     }
+
+    public boolean[][] getPlayerChoosedPosition() { return playerChoosedPosition; }
 
 }
