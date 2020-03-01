@@ -52,4 +52,8 @@ public class Ship {
         this.positions = positions;
     }
 
+    public ShipType getShipType() {
+        return type;
+    }
+
 }
