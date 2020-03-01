@@ -1,6 +1,7 @@
 package application;
 
 import battleship.Position;
+import battleship.Ship;
 import battleship.board.BattleshipBoard;
 import battleship.board.BattleshipBoardException;
 import battleship.board.BattleshipPosition;
@@ -37,12 +38,19 @@ public class Program {
                     message += "Miss!";
                 }
 
-                engine.checkBattleships();
+                Ship ship = engine.checkBattleships();
+
+                if (ship != null) {
+                    message += "\n\n";
+                    message += ship.getShipType() + " was sunk!";
+                }
             }
             catch (BattleshipBoardException e) {
+                message = "";
                 message += e.getMessage();
             }
             catch (BatteshipGameException e) {
+                message = "";
                 message += e.getMessage();
             }
         }
