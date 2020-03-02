@@ -20,14 +20,12 @@ public class Program {
         BattleshipGame engine = new BattleshipGame(board);
         String message = "";
 
-        while(engine.getShips().size() > 0) {
+        while(engine.getShips().size() < 5) {
             UI.clearScreen();
             UI.printHeader();
             UI.printBattleshipBoard(board);
 
-            UI.readChooseShipPosition(sc);
-            sc.nextLine();
-            sc.nextLine();
+            UI.readChooseShipPosition(sc, board);
             /*UI.printMessage(message);
 
             try {
