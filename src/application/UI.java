@@ -65,7 +65,7 @@ public class UI {
         }
     }
 
-    public static void readChooseShipPosition(Scanner sc, BattleshipBoard board) {
+    public static void readChooseShipPosition(Scanner sc, BattleshipGame game) {
         try {
             System.out.println("Choose Ship Direction:\n");
             System.out.println("1-Horizontal   2-Vertical\n");
@@ -83,9 +83,12 @@ public class UI {
             Position position = new BattleshipPosition(column, row).toPosition();
 
             // System.out.println("Direction: " + direction + "; position: " + position);
-            board.placeShip(new Ship(ShipType.PATROLBOAT), direction, position);
+            Ship newShip = new Ship(ShipType.PATROLBOAT);
+            game.getBoard().placeShip(newShip, direction, position);
+            game.getShips().add(newShip);
 
             sc.nextLine();
+            System.out.print("\nType ENTER to continue...");
             sc.nextLine();
         }
         catch (InputMismatchException e) {

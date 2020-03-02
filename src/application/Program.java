@@ -25,7 +25,7 @@ public class Program {
             UI.printHeader();
             UI.printBattleshipBoard(board);
 
-            UI.readChooseShipPosition(sc, board);
+            UI.readChooseShipPosition(sc, engine);
             /*UI.printMessage(message);
 
             try {

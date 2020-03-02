@@ -65,6 +65,10 @@ public class BattleshipGame {
         return null;
     }
 
+    public BattleshipBoard getBoard() {
+        return board;
+    }
+
     public List<Ship> getShips() {
         return ships;
     }
