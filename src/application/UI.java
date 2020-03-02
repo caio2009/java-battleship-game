@@ -82,7 +82,6 @@ public class UI {
 
             Position position = new BattleshipPosition(column, row).toPosition();
 
-            // System.out.println("Direction: " + direction + "; position: " + position);
             Ship newShip = new Ship(ShipType.PATROLBOAT);
             game.getBoard().placeShip(newShip, direction, position);
             game.getShips().add(newShip);
@@ -96,6 +95,9 @@ public class UI {
         }
         catch (NumberFormatException e) {
             throw new BatteshipGameException("Problem in reading ship position.");
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            throw new BattleshipBoardException("Ship can't stay out of board.");
         }
     }
 
