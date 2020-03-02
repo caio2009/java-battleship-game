@@ -40,6 +40,11 @@ public class BattleshipBoard {
         if (direction == 1) {
             for (int i = 0; i < shipPositionNumber(ship.getShipType()); i++) {
                 Position position = new Position(refPosition.getRow(), refPosition.getColumn() + i);
+
+                if (checkPosition(position) != null) {
+                    throw new BattleshipBoardException("Can't set position to this ship. Because it's already occupied.");
+                }
+
                 ShipPosition shipPosition = new ShipPosition(position, true);
 
                 shipPositions.add(shipPosition);
@@ -50,6 +55,11 @@ public class BattleshipBoard {
         else {
             for (int i = 0; i < shipPositionNumber(ship.getShipType()); i++) {
                 Position position = new Position(refPosition.getRow() + i, refPosition.getColumn());
+
+                if (checkPosition(position) != null) {
+                    throw new BattleshipBoardException("Can't set position to this ship. Because it's already occupied.");
+                }
+
                 ShipPosition shipPosition = new ShipPosition(position, true);
 
                 shipPositions.add(shipPosition);

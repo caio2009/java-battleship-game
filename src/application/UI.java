@@ -82,7 +82,7 @@ public class UI {
 
             Position position = new BattleshipPosition(column, row).toPosition();
 
-            Ship newShip = new Ship(ShipType.PATROLBOAT);
+            Ship newShip = new Ship(ShipType.CARRIER);
             game.getBoard().placeShip(newShip, direction, position);
             game.getShips().add(newShip);
 
