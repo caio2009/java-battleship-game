@@ -17,8 +17,8 @@ public class BattleshipGame {
 
     public BattleshipGame(BattleshipBoard board) {
         this.board = board;
-        initShips();
-        initShipPositions();
+        /*initShips();
+        initShipPositions();*/
     }
 
     public boolean checkPlayerPosition(Position position) {
@@ -73,22 +73,22 @@ public class BattleshipGame {
         return sunkShips;
     }
 
-    private void initShips() {
+    /*private void initShips() {
         // Instance for tests
         Ship ship1 = new Ship(
                 ShipType.SUBMARINE,
                 Arrays.asList(
-                        new ShipPosition(new BattleshipPosition('c', 3).toPosition()/*, true*/),
-                        new ShipPosition(new BattleshipPosition('c', 4).toPosition()/*, true*/),
-                        new ShipPosition(new BattleshipPosition('c', 5).toPosition()/*, true*/)
+                        new ShipPosition(new BattleshipPosition('c', 3).toPosition(), true),
+                        new ShipPosition(new BattleshipPosition('c', 4).toPosition(), true),
+                        new ShipPosition(new BattleshipPosition('c', 5).toPosition(), true)
                 )
         );
         Ship ship2 = new Ship(
                 ShipType.DESTROYER,
                 Arrays.asList(
-                        new ShipPosition(new BattleshipPosition('a', 1).toPosition()/*, true*/),
-                        new ShipPosition(new BattleshipPosition('b', 1).toPosition()/*, true*/),
-                        new ShipPosition(new BattleshipPosition('c', 1).toPosition()/*, true*/)
+                        new ShipPosition(new BattleshipPosition('a', 1).toPosition(), true),
+                        new ShipPosition(new BattleshipPosition('b', 1).toPosition(), true),
+                        new ShipPosition(new BattleshipPosition('c', 1).toPosition(), true)
                 )
         );
         ships.add(ship1);
@@ -103,6 +103,6 @@ public class BattleshipGame {
                 board.getMatrix()[row][column] = shipPosition;
             });
         });
-    }
+    }*/
 
 }
