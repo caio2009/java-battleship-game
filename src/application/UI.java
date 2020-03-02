@@ -8,6 +8,7 @@ import battleship.board.BattleshipPosition;
 import engine.BatteshipGameException;
 import utils.IntegerUtil;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UI {
@@ -58,6 +59,33 @@ public class UI {
     public static void printMessage(String msg) {
         if (!msg.equals("")) {
             System.out.println(msg + "\n");
+        }
+    }
+
+    public static void readChooseShipPosition(Scanner sc) {
+        try {
+            System.out.println("Choose Ship Direction:\n");
+            System.out.println("1-Horizontal   2-Vertical\n");
+            System.out.print("Entry: ");
+
+            int direction = sc.nextInt();
+            System.out.println();
+
+            System.out.print("Enter the ship position: ");
+            String strPosition = sc.next();
+
+            char column = strPosition.substring(0, 1).charAt(0);
+            int row = Integer.parseInt(strPosition.substring(1));
+
+            Position position = new BattleshipPosition(column, row).toPosition();
+
+            System.out.println("Direction: " + direction + "; position: " + position);
+        }
+        catch (InputMismatchException e) {
+            throw new BatteshipGameException("Invalid entry.");
+        }
+        catch (NumberFormatException e) {
+            throw new BatteshipGameException("Problem in reading ship position.");
         }
     }
 

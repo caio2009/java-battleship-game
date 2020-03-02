@@ -24,7 +24,11 @@ public class Program {
             UI.clearScreen();
             UI.printHeader();
             UI.printBattleshipBoard(board);
-            UI.printMessage(message);
+
+            UI.readChooseShipPosition(sc);
+            sc.nextLine();
+            sc.nextLine();
+            /*UI.printMessage(message);
 
             try {
                 Position position = UI.readPlayerTargetPosition(sc);
@@ -52,7 +56,7 @@ public class Program {
             catch (BatteshipGameException e) {
                 message = "";
                 message += e.getMessage();
-            }
+            }*/
         }
 
         UI.clearScreen();
