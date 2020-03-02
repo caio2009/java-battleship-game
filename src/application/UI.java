@@ -1,11 +1,14 @@
 package application;
 
 import battleship.Position;
+import battleship.Ship;
 import battleship.ShipPosition;
+import battleship.ShipType;
 import battleship.board.BattleshipBoard;
 import battleship.board.BattleshipBoardException;
 import battleship.board.BattleshipPosition;
 import engine.BatteshipGameException;
+import engine.BattleshipGame;
 import utils.IntegerUtil;
 
 import java.util.InputMismatchException;
@@ -62,7 +65,7 @@ public class UI {
         }
     }
 
-    public static void readChooseShipPosition(Scanner sc) {
+    public static void readChooseShipPosition(Scanner sc, BattleshipBoard board) {
         try {
             System.out.println("Choose Ship Direction:\n");
             System.out.println("1-Horizontal   2-Vertical\n");
@@ -79,7 +82,11 @@ public class UI {
 
             Position position = new BattleshipPosition(column, row).toPosition();
 
-            System.out.println("Direction: " + direction + "; position: " + position);
+            // System.out.println("Direction: " + direction + "; position: " + position);
+            board.placeShip(new Ship(ShipType.PATROLBOAT), direction, position);
+
+            sc.nextLine();
+            sc.nextLine();
         }
         catch (InputMismatchException e) {
             throw new BatteshipGameException("Invalid entry.");
@@ -119,7 +126,8 @@ public class UI {
                     else System.out.print("m");
                 }
                 else {
-                    System.out.print("-");
+                    if (matrix[row - 1][i] != null) System.out.print((matrix[row - 1][i].isMarked() ? "#" : "-"));
+                    else System.out.print("-");
                 }
             }
             else {
@@ -128,7 +136,8 @@ public class UI {
                     else System.out.print(" m");
                 }
                 else {
-                    System.out.print(" -");
+                    if (matrix[row - 1][i] != null) System.out.print((matrix[row - 1][i].isMarked() ? " #" : " -"));
+                    else System.out.print(" -");
                 }
             }
         }
