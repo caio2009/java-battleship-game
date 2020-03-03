@@ -74,6 +74,10 @@ public class UI {
             int direction = sc.nextInt();
             System.out.println();
 
+            if (direction != 1 && direction != 2) {
+                throw new BattleshipGameException("Invalid entry " + direction + ".");
+            }
+
             System.out.print("Enter the ship position: ");
             String strPosition = sc.next();
 
