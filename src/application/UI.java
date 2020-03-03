@@ -7,7 +7,7 @@ import battleship.ShipType;
 import battleship.board.BattleshipBoard;
 import battleship.board.BattleshipBoardException;
 import battleship.board.BattleshipPosition;
-import engine.BatteshipGameException;
+import engine.BattleshipGameException;
 import engine.BattleshipGame;
 import utils.IntegerUtil;
 
@@ -47,10 +47,10 @@ public class UI {
         }
         catch (BattleshipBoardException e) {
             // throw new BattleshipBoardException("Invalid position: " + e.getMessage());
-            throw new BatteshipGameException("Invalid position.");
+            throw new BattleshipGameException("Invalid position.");
         }
         catch (NumberFormatException e) {
-            throw new BatteshipGameException("Problem in reading target position.");
+            throw new BattleshipGameException("Problem in reading target position.");
         }
     }
 
@@ -87,10 +87,10 @@ public class UI {
             game.getShips().add(newShip);
         }
         catch (InputMismatchException e) {
-            throw new BatteshipGameException("Invalid entry.");
+            throw new BattleshipGameException("Invalid entry.");
         }
         catch (NumberFormatException e) {
-            throw new BatteshipGameException("Problem in reading ship position.");
+            throw new BattleshipGameException("Problem in reading ship position.");
         }
         catch (ArrayIndexOutOfBoundsException e) {
             throw new BattleshipBoardException("Ship can't stay out of board.");

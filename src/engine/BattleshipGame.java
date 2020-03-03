@@ -3,9 +3,7 @@ package engine;
 import battleship.Position;
 import battleship.Ship;
 import battleship.ShipPosition;
-import battleship.ShipType;
 import battleship.board.BattleshipBoard;
-import battleship.board.BattleshipPosition;
 
 import java.util.*;
 
@@ -23,7 +21,7 @@ public class BattleshipGame {
 
     public boolean checkPlayerPosition(Position position) {
         if (!board.positionExists(position)) {
-            throw new BatteshipGameException("Invalid position!");
+            throw new BattleshipGameException("Invalid position!");
         }
 
         board.getPlayerChoosedPosition()[position.getRow()][position.getColumn()] = true;
