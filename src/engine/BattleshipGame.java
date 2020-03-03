@@ -63,6 +63,15 @@ public class BattleshipGame {
         return null;
     }
 
+    // Mark all ship positions marker of ship list with false
+    public void hideAllShip() {
+        ships.forEach(x -> {
+            x.getShipPositions().forEach(shipPosition -> {
+                shipPosition.setMarker(false);
+            });
+        });
+    }
+
     public BattleshipBoard getBoard() {
         return board;
     }

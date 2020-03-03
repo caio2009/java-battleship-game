@@ -66,6 +66,8 @@ public class Program {
             }
         }
 
+        game.hideAllShip();
+
         while(game.getShips().size() > 0) {
             UI.clearScreen();
             UI.printHeader();
