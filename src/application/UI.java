@@ -85,10 +85,6 @@ public class UI {
             Ship newShip = new Ship(ShipType.CARRIER);
             game.getBoard().placeShip(newShip, direction, position);
             game.getShips().add(newShip);
-
-            sc.nextLine();
-            System.out.print("\nType ENTER to continue...");
-            sc.nextLine();
         }
         catch (InputMismatchException e) {
             throw new BatteshipGameException("Invalid entry.");
