@@ -7,7 +7,7 @@ import battleship.board.BattleshipBoard;
 import battleship.board.BattleshipBoardException;
 import battleship.board.BattleshipPosition;
 import config.GameConfiguration;
-import engine.BatteshipGameException;
+import engine.BattleshipGameException;
 import engine.BattleshipGame;
 
 import java.util.Scanner;
@@ -26,31 +26,43 @@ public class Program {
             UI.printHeader();
             UI.printBattleshipBoard(board);
 
-            UI.readChooseShipPosition(sc, game);
+            UI.printMessage(message);
 
-            UI.clearScreen();
-            UI.printHeader();
-            UI.printBattleshipBoard(board);
+            try {
+                UI.readChooseShipPosition(sc, game);
 
-            System.out.println("Are you sure about that position?\n");
-            System.out.print("Press [y] to continue or [n] to cancel: ");
-            String response = sc.next();
+                UI.clearScreen();
+                UI.printHeader();
+                UI.printBattleshipBoard(board);
 
-            if (response.equals("y")) {
-                // Do nothing, just continue
-            }
-            // Undo the choosed ship position
-            else  {
-                // Remove ship from game ship list
-                Ship shipToRemove = game.getShips().get(game.getShips().size() - 1);
-                game.getShips().remove(shipToRemove);
+                System.out.println("Are you sure about that position?\n");
+                System.out.print("Press [y] to continue or [n] to cancel: ");
+                String response = sc.next();
 
-                // Remove ship position from board matrix
-                for (ShipPosition shipPosition : shipToRemove.getShipPositions()) {
-                    int row = shipPosition.getPosition().getRow();
-                    int column = shipPosition.getPosition().getColumn();
-                    game.getBoard().getMatrix()[row][column] = null;
+                if (response.equals("y")) {
+                    // Do nothing, just continue
                 }
+                // Undo the choosed ship position
+                else  {
+                    // Remove ship from game ship list
+                    Ship shipToRemove = game.getShips().get(game.getShips().size() - 1);
+                    game.getShips().remove(shipToRemove);
+
+                    // Remove ship position from board matrix
+                    for (ShipPosition shipPosition : shipToRemove.getShipPositions()) {
+                        int row = shipPosition.getPosition().getRow();
+                        int column = shipPosition.getPosition().getColumn();
+                        game.getBoard().getMatrix()[row][column] = null;
+                    }
+                }
+            }
+            catch (BattleshipGameException e) {
+                message = "";
+                message += e.getMessage();
+            }
+            catch (BattleshipBoardException e) {
+                message = "";
+                message += e.getMessage();
             }
         }
 
@@ -83,7 +95,7 @@ public class Program {
                 message = "";
                 message += e.getMessage();
             }
-            catch (BatteshipGameException e) {
+            catch (BattleshipGameException e) {
                 message = "";
                 message += e.getMessage();
             }
