@@ -1,6 +1,6 @@
 package engine;
 
-import battleship.Position;
+import battleship.board.Position;
 import battleship.Ship;
 import battleship.ShipPosition;
 import battleship.board.BattleshipBoard;

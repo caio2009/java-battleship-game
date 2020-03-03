@@ -1,6 +1,5 @@
 package battleship.board;
 
-import battleship.Position;
 import config.GameConfiguration;
 
 public class BattleshipPosition {

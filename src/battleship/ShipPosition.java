@@ -1,5 +1,7 @@
 package battleship;
 
+import battleship.board.Position;
+
 public class ShipPosition {
 
     private Position position;

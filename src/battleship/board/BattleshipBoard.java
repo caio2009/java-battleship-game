@@ -1,15 +1,12 @@
 package battleship.board;
 
-import battleship.Position;
 import battleship.Ship;
 import battleship.ShipPosition;
 import battleship.ShipType;
 import config.GameConfiguration;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BattleshipBoard {
 
