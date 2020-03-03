@@ -7,8 +7,8 @@ import battleship.board.BattleshipBoard;
 import battleship.board.BattleshipBoardException;
 import battleship.board.BattleshipPosition;
 import config.GameConfiguration;
-import engine.BattleshipGame;
 import engine.BatteshipGameException;
+import engine.BattleshipGame;
 
 import java.util.Scanner;
 
@@ -18,15 +18,15 @@ public class Program {
         Scanner sc = new Scanner(System.in);
 
         BattleshipBoard board = new BattleshipBoard(GameConfiguration.NUMBER_OF_ROWS, GameConfiguration.NUMBER_OF_COLUMNS);
-        BattleshipGame engine = new BattleshipGame(board);
+        BattleshipGame game = new BattleshipGame(board);
         String message = "";
 
-        while(engine.getShips().size() < 5) {
+        while(game.getShips().size() < 5) {
             UI.clearScreen();
             UI.printHeader();
             UI.printBattleshipBoard(board);
 
-            UI.readChooseShipPosition(sc, engine);
+            UI.readChooseShipPosition(sc, game);
 
             UI.clearScreen();
             UI.printHeader();
@@ -42,19 +42,19 @@ public class Program {
             // Undo the choosed ship position
             else  {
                 // Remove ship from game ship list
-                Ship shipToRemove = engine.getShips().get(engine.getShips().size() - 1);
-                engine.getShips().remove(shipToRemove);
+                Ship shipToRemove = game.getShips().get(game.getShips().size() - 1);
+                game.getShips().remove(shipToRemove);
 
                 // Remove ship position from board matrix
                 for (ShipPosition shipPosition : shipToRemove.getShipPositions()) {
                     int row = shipPosition.getPosition().getRow();
                     int column = shipPosition.getPosition().getColumn();
-                    engine.getBoard().getMatrix()[row][column] = null;
+                    game.getBoard().getMatrix()[row][column] = null;
                 }
             }
         }
 
-        while(engine.getShips().size() > 0) {
+        while(game.getShips().size() > 0) {
             UI.clearScreen();
             UI.printHeader();
             UI.printBattleshipBoard(board);
@@ -65,14 +65,14 @@ public class Program {
 
                 message = ""; // clearing message
 
-                if (engine.checkPlayerPosition(position)) {
+                if (game.checkPlayerPosition(position)) {
                     message += "A ship position was hitted. In position " + BattleshipPosition.fromPosition(position) + ".";
                 }
                 else {
                     message += "Miss!";
                 }
 
-                Ship ship = engine.checkBattleships();
+                Ship ship = game.checkBattleships();
 
                 if (ship != null) {
                     message += "\n\n";
