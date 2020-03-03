@@ -9,8 +9,8 @@ public class Ship {
     private List<ShipPosition> positions;
     private ShipType type;
 
-    public Ship(ShipType type, List<ShipPosition> positions) {
-        if (type == ShipType.CARRIER) {
+    public Ship(ShipType type) {
+        /*if (type == ShipType.CARRIER) {
             if (positions.size() != 5) {
                 throw new ShipException(type + " must contain 5 positions.");
             }
@@ -38,9 +38,8 @@ public class Ship {
             if (positions.size() != 2) {
                 throw new ShipException(type + " must contain 2 positions.");
             }
-        }
+        }*/
 
-        this.positions = positions;
         this.type = type;
     }
 

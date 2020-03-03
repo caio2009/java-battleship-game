@@ -27,7 +27,7 @@ public class Position {
     }
   
     public String toString() {
-        return "position: row " + row + ", column " + column;
+        return "row " + row + ", column " + column;
     }
 
 }

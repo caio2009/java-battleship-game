@@ -1,13 +1,17 @@
 package application;
 
 import battleship.Position;
+import battleship.Ship;
 import battleship.ShipPosition;
+import battleship.ShipType;
 import battleship.board.BattleshipBoard;
 import battleship.board.BattleshipBoardException;
 import battleship.board.BattleshipPosition;
 import engine.BatteshipGameException;
+import engine.BattleshipGame;
 import utils.IntegerUtil;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UI {
@@ -61,6 +65,38 @@ public class UI {
         }
     }
 
+    public static void readChooseShipPosition(Scanner sc, BattleshipGame game) {
+        try {
+            System.out.println("Choose Ship Direction:\n");
+            System.out.println("1-Horizontal   2-Vertical\n");
+            System.out.print("Entry: ");
+
+            int direction = sc.nextInt();
+            System.out.println();
+
+            System.out.print("Enter the ship position: ");
+            String strPosition = sc.next();
+
+            char column = strPosition.substring(0, 1).charAt(0);
+            int row = Integer.parseInt(strPosition.substring(1));
+
+            Position position = new BattleshipPosition(column, row).toPosition();
+
+            Ship newShip = new Ship(ShipType.CARRIER);
+            game.getBoard().placeShip(newShip, direction, position);
+            game.getShips().add(newShip);
+        }
+        catch (InputMismatchException e) {
+            throw new BatteshipGameException("Invalid entry.");
+        }
+        catch (NumberFormatException e) {
+            throw new BatteshipGameException("Problem in reading ship position.");
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            throw new BattleshipBoardException("Ship can't stay out of board.");
+        }
+    }
+
     private static void printRow(int rowIndex, int columns, BattleshipBoard board) {
         // Aligning the row index to view like this:
         //  1 - - - - -
@@ -91,7 +127,8 @@ public class UI {
                     else System.out.print("m");
                 }
                 else {
-                    System.out.print("-");
+                    if (matrix[row - 1][i] != null) System.out.print((matrix[row - 1][i].isMarked() ? "#" : "-"));
+                    else System.out.print("-");
                 }
             }
             else {
@@ -100,7 +137,8 @@ public class UI {
                     else System.out.print(" m");
                 }
                 else {
-                    System.out.print(" -");
+                    if (matrix[row - 1][i] != null) System.out.print((matrix[row - 1][i].isMarked() ? " #" : " -"));
+                    else System.out.print(" -");
                 }
             }
         }
