@@ -7,6 +7,7 @@ import battleship.ShipType;
 import battleship.board.BattleshipBoard;
 import battleship.board.BattleshipBoardException;
 import battleship.board.BattleshipPosition;
+import config.GameConfiguration;
 import engine.BattleshipGameException;
 import engine.BattleshipGame;
 import utils.IntegerUtil;
@@ -67,6 +68,11 @@ public class UI {
 
     public static void readChooseShipPosition(Scanner sc, BattleshipGame game) {
         try {
+            ShipType type = game.getMissingShipType();
+
+            System.out.println("Adding new ship: " + type);
+            System.out.println();
+
             System.out.println("Choose Ship Direction:\n");
             System.out.println("1-Horizontal   2-Vertical\n");
             System.out.print("Entry: ");
@@ -86,11 +92,10 @@ public class UI {
 
             Position position = new BattleshipPosition(column, row).toPosition();
 
-            Ship newShip = new Ship(ShipType.CARRIER);
-            game.getBoard().placeShip(newShip, direction, position);
-            game.getShips().add(newShip);
+            game.addShip(type, direction, position);
         }
         catch (InputMismatchException e) {
+            sc.nextLine();
             throw new BattleshipGameException("Invalid entry.");
         }
         catch (NumberFormatException e) {

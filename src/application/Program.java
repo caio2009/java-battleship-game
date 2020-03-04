@@ -21,7 +21,7 @@ public class Program {
         BattleshipGame game = new BattleshipGame(board);
         String message = "";
 
-        while(game.getShips().size() < 5) {
+        while(game.getShips().size() < game.getLimitNumberOfShips()) {
             UI.clearScreen();
             UI.printHeader();
             UI.printBattleshipBoard(board);
@@ -30,6 +30,8 @@ public class Program {
 
             try {
                 UI.readChooseShipPosition(sc, game);
+
+                message = "";
 
                 UI.clearScreen();
                 UI.printHeader();
