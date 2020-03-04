@@ -38,10 +38,11 @@ public class Program {
                 UI.printBattleshipBoard(board);
 
                 System.out.println("Are you sure about that position?\n");
-                System.out.print("Press [y] to continue or [n] to cancel: ");
-                String response = sc.next();
+                System.out.print("Press ENTER to continue or [c] to cancel: ");
+                sc.nextLine(); // clean buffer
+                String response = sc.nextLine();
 
-                if (response.equals("y")) {
+                if (response.isEmpty()) {
                     // Do nothing, just continue
                 }
                 // Undo the choosed ship position
