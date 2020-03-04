@@ -1,11 +1,14 @@
 package engine;
 
+import battleship.ShipType;
 import battleship.board.Position;
 import battleship.Ship;
 import battleship.ShipPosition;
 import battleship.board.BattleshipBoard;
+import config.GameConfiguration;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class BattleshipGame {
 
@@ -61,6 +64,36 @@ public class BattleshipGame {
             return markedShip;
         }
         return null;
+    }
+
+    public void addShip(ShipType type, int direction, Position position) {
+        // direction: 1-Horizontal   2-Vertical
+        Ship ship = new Ship(type);
+        ships.add(ship);
+        board.placeShip(ship, direction, position);
+    }
+
+    public int getNumberOfShipsByType(ShipType type) {
+        List<Ship> filterdShips = ships.stream().filter(ship -> ship.getShipType() == type).collect(Collectors.toList());
+        return filterdShips.size();
+    }
+
+    // Get ship type that is missing in the game order by ships position quantity
+    public ShipType getMissingShipType() {
+        if (getNumberOfShipsByType(ShipType.CARRIER) < GameConfiguration.NUMBER_OF_CARRIERS) return ShipType.CARRIER;
+        if (getNumberOfShipsByType(ShipType.BATTLESHIP) < GameConfiguration.NUMBER_OF_BATTLESHIPS) return ShipType.BATTLESHIP;
+        if (getNumberOfShipsByType(ShipType.DESTROYER) < GameConfiguration.NUMBER_OF_DESTROYERS) return ShipType.DESTROYER;
+        if (getNumberOfShipsByType(ShipType.SUBMARINE) < GameConfiguration.NUMBER_OF_SUBMARINES) return ShipType.SUBMARINE;
+        return ShipType.PATROLBOAT;
+    }
+
+    public int getLimitNumberOfShips() {
+        return
+                GameConfiguration.NUMBER_OF_CARRIERS
+                + GameConfiguration.NUMBER_OF_BATTLESHIPS
+                + GameConfiguration.NUMBER_OF_DESTROYERS
+                + GameConfiguration.NUMBER_OF_SUBMARINES
+                + GameConfiguration.NUMBER_OF_PATROL_BOATS;
     }
 
     // Mark all ship positions marker of ship list with false
