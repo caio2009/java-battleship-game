@@ -75,7 +75,7 @@ public class UI {
 
             System.out.println("Choose Ship Direction:\n");
             System.out.println("1-Horizontal   2-Vertical\n");
-            System.out.print("Entry: ");
+            System.out.print("Direction: ");
 
             int direction = sc.nextInt();
             System.out.println();
