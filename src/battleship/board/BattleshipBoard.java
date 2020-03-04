@@ -36,6 +36,12 @@ public class BattleshipBoard {
 
         // Horizontal
         if (direction == 1) {
+
+            // Check if the initial position and final position exists
+            if (!positionExists(refPosition) || !positionExists(new Position(refPosition.getRow(), refPosition.getColumn() + shipPositionNumber(ship.getShipType()) - 1))) {
+                throw new BattleshipBoardException("Ship can't stay out of board.");
+            }
+
             for (int i = 0; i < shipPositionNumber(ship.getShipType()); i++) {
                 Position position = new Position(refPosition.getRow(), refPosition.getColumn() + i);
 
@@ -51,6 +57,12 @@ public class BattleshipBoard {
         }
         // Vertical
         else {
+
+            // Check if the initial position and final position exists
+            if (!positionExists(refPosition) || !positionExists(new Position(refPosition.getRow() + shipPositionNumber(ship.getShipType()) - 1, refPosition.getColumn()))) {
+                throw new BattleshipBoardException("Ship can't stay out of board.");
+            }
+
             for (int i = 0; i < shipPositionNumber(ship.getShipType()); i++) {
                 Position position = new Position(refPosition.getRow() + i, refPosition.getColumn());
 

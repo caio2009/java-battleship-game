@@ -74,8 +74,8 @@ public class BattleshipGame {
         }
 
         Ship ship = new Ship(type);
-        ships.add(ship);
         board.placeShip(ship, direction, position);
+        ships.add(ship);
     }
 
     public int getNumberOfShipsByType(ShipType type) {
