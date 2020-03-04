@@ -1,6 +1,7 @@
 package engine;
 
 import battleship.ShipType;
+import battleship.board.BattleshipBoardException;
 import battleship.board.Position;
 import battleship.Ship;
 import battleship.ShipPosition;
@@ -68,6 +69,10 @@ public class BattleshipGame {
 
     public void addShip(ShipType type, int direction, Position position) {
         // direction: 1-Horizontal   2-Vertical
+        if(!board.checkPositionValidation(position, direction, type)) {
+            throw new BattleshipBoardException("The ship can't touch other ship.");
+        }
+
         Ship ship = new Ship(type);
         ships.add(ship);
         board.placeShip(ship, direction, position);

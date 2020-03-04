@@ -132,22 +132,22 @@ public class UI {
         for (int i = 0; i < columns; i++) {
             if (i == 0) {
                 if (playerChoosedPosition[row - 1][i]) {
-                    if (matrix[row - 1][i] != null) System.out.print((matrix[row - 1][i].isMarked() ? "#" : "-"));
+                    if (matrix[row - 1][i] != null) System.out.print((matrix[row - 1][i].isMarked() ? "#" : "~"));
                     else System.out.print("m");
                 }
                 else {
-                    if (matrix[row - 1][i] != null) System.out.print((matrix[row - 1][i].isMarked() ? "#" : "-"));
-                    else System.out.print("-");
+                    if (matrix[row - 1][i] != null) System.out.print((matrix[row - 1][i].isMarked() ? "#" : "~"));
+                    else System.out.print("~");
                 }
             }
             else {
                 if (playerChoosedPosition[row - 1][i]) {
-                    if (matrix[row - 1][i] != null) System.out.print(SPACE + (matrix[row - 1][i].isMarked() ? "#" : "-"));
+                    if (matrix[row - 1][i] != null) System.out.print(SPACE + (matrix[row - 1][i].isMarked() ? "#" : "~"));
                     else System.out.print(" m");
                 }
                 else {
-                    if (matrix[row - 1][i] != null) System.out.print((matrix[row - 1][i].isMarked() ? " #" : " -"));
-                    else System.out.print(" -");
+                    if (matrix[row - 1][i] != null) System.out.print((matrix[row - 1][i].isMarked() ? " #" : " ~"));
+                    else System.out.print(" ~");
                 }
             }
         }
