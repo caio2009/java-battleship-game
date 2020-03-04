@@ -27,6 +27,7 @@ public class BattleshipBoard {
     }
 
     public ShipPosition checkPosition(Position position) {
+        if (!positionExists(position)) return null;
         return matrix[position.getRow()][position.getColumn()];
     }
 
@@ -65,6 +66,156 @@ public class BattleshipBoard {
         }
 
         ship.setShipPositions(shipPositions);
+    }
+
+    public boolean checkPositionValidation(Position refPosition, int direction, ShipType type) {
+        boolean validation = true;
+        // Horizontal
+        if (direction == 1) {
+            // Checking the around positions. If there is a ship position then validation is false.
+            for (int i = 0; i < shipPositionNumber(type); i++) {
+                Position position = new Position(refPosition.getRow(), refPosition.getColumn() + i);
+                if (i == 0) {
+                    // up
+                    if (checkPosition(new Position(position.getRow() - 1, position.getColumn())) != null) {
+                        validation = false;
+                        break;
+                    };
+                    // down
+                    if (checkPosition(new Position(position.getRow() + 1, position.getColumn())) != null) {
+                        validation = false;
+                        break;
+                    };
+                    // left
+                    if (checkPosition(new Position(position.getRow(), position.getColumn() - 1)) != null) {
+                        validation = false;
+                        break;
+                    }
+                    // northwest
+                    if (checkPosition(new Position(position.getRow() - 1, position.getColumn() - 1)) != null) {
+                        validation = false;
+                        break;
+                    }
+                    // southwest
+                    if (checkPosition(new Position(position.getRow() + 1, position.getColumn() - 1)) != null) {
+                        validation = false;
+                        break;
+                    }
+                }
+                else if (i == shipPositionNumber(type) - 1) {
+                    // up
+                    if (checkPosition(new Position(position.getRow() - 1, position.getColumn())) != null) {
+                        validation = false;
+                        break;
+                    };
+                    // down
+                    if (checkPosition(new Position(position.getRow() + 1, position.getColumn())) != null) {
+                        validation = false;
+                        break;
+                    };
+                    // right
+                    if (checkPosition(new Position(position.getRow(), position.getColumn() + 1)) != null) {
+                        validation = false;
+                        break;
+                    }
+                    // northeast
+                    if (checkPosition(new Position(position.getRow() - 1, position.getColumn() + 1)) != null) {
+                        validation = false;
+                        break;
+                    }
+                    // southeast
+                    if (checkPosition(new Position(position.getRow() + 1, position.getColumn() + 1)) != null) {
+                        validation = false;
+                        break;
+                    }
+                }
+                else {
+                    // up
+                    if (checkPosition(new Position(position.getRow() - 1, position.getColumn())) != null) {
+                        validation = false;
+                        break;
+                    };
+                    // down
+                    if (checkPosition(new Position(position.getRow() + 1, position.getColumn())) != null) {
+                        validation = false;
+                        break;
+                    };
+                }
+            }
+        }
+        // Vertical
+        else {
+            for (int i = 0; i < shipPositionNumber(type); i++) {
+                Position position = new Position(refPosition.getRow(), refPosition.getColumn() + i);
+                if (i == 0) {
+                    // up
+                    if (checkPosition(new Position(position.getRow() - 1, position.getColumn())) != null) {
+                        validation = false;
+                        break;
+                    };
+                    // right
+                    if (checkPosition(new Position(position.getRow(), position.getColumn() + 1)) != null) {
+                        validation = false;
+                        break;
+                    };
+                    // left
+                    if (checkPosition(new Position(position.getRow(), position.getColumn() - 1)) != null) {
+                        validation = false;
+                        break;
+                    }
+                    // northwest
+                    if (checkPosition(new Position(position.getRow() - 1, position.getColumn() - 1)) != null) {
+                        validation = false;
+                        break;
+                    }
+                    // northeast
+                    if (checkPosition(new Position(position.getRow() - 1, position.getColumn() + 1)) != null) {
+                        validation = false;
+                        break;
+                    }
+                }
+                else if (i == shipPositionNumber(type) - 1) {
+                    // down
+                    if (checkPosition(new Position(position.getRow() + 1, position.getColumn())) != null) {
+                        validation = false;
+                        break;
+                    };
+                    // left
+                    if (checkPosition(new Position(position.getRow(), position.getColumn() - 1)) != null) {
+                        validation = false;
+                        break;
+                    };
+                    // right
+                    if (checkPosition(new Position(position.getRow(), position.getColumn() + 1)) != null) {
+                        validation = false;
+                        break;
+                    }
+                    // southwest
+                    if (checkPosition(new Position(position.getRow() + 1, position.getColumn() - 1)) != null) {
+                        validation = false;
+                        break;
+                    }
+                    // southeast
+                    if (checkPosition(new Position(position.getRow() + 1, position.getColumn() + 1)) != null) {
+                        validation = false;
+                        break;
+                    }
+                }
+                else {
+                    // right
+                    if (checkPosition(new Position(position.getRow(), position.getColumn() + 1)) != null) {
+                        validation = false;
+                        break;
+                    };
+                    // left
+                    if (checkPosition(new Position(position.getRow(), position.getColumn() - 1)) != null) {
+                        validation = false;
+                        break;
+                    };
+                }
+            }
+        }
+        return validation;
     }
 
     private int shipPositionNumber(ShipType type) {
