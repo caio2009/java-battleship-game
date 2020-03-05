@@ -71,7 +71,7 @@ public class BattleshipGame {
     }
 
     public boolean isOver() {
-        return player1.getShips().size() == 0 || player2.getShips().size() == 0;
+        return player1.getShips().size() == 0 | player2.getShips().size() == 0;
     }
 
     public static int getLimitNumberOfShips() {
