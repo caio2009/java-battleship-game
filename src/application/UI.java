@@ -110,21 +110,21 @@ public class UI {
         String message = "";
 
         while (player.getShips().size() < BattleshipGame.getLimitNumberOfShips()) {
-            UI.clearScreen();
-            UI.printHeader();
-            UI.printBattleshipBoard(player.getBoard());
+            clearScreen();
+            printHeader();
+            printBattleshipBoard(player.getBoard());
 
-            UI.printMessage("Setting " + player + " Ship Positions");
-            UI.printMessage(message);
+            printMessage("Setting " + player + " Ship Positions");
+            printMessage(message);
 
             try {
                 UI.readChooseShipPosition(player, sc);
 
                 message = "";
 
-                UI.clearScreen();
-                UI.printHeader();
-                UI.printBattleshipBoard(player.getBoard());
+                clearScreen();
+                printHeader();
+                printBattleshipBoard(player.getBoard());
 
                 System.out.println("Are you sure about that position?\n");
                 System.out.print("Press ENTER to continue or [c] to cancel: ");
