@@ -96,7 +96,7 @@ public class UI {
         }
         catch (InputMismatchException e) {
             sc.nextLine();
-            throw new BattleshipGameException("Can't input text on direction input.");
+            throw new BattleshipGameException("Can't enter text on direction input.");
         }
         catch (NumberFormatException e) {
             throw new BattleshipGameException("Problem in reading ship position.");
