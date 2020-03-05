@@ -17,6 +17,9 @@ public class BattleshipGame {
     List<Ship> ships = new ArrayList<>();
     List<Ship> sunkShips = new ArrayList<>();
 
+    Player player1 = new Player(1, new BattleshipBoard(GameConfiguration.NUMBER_OF_ROWS, GameConfiguration.NUMBER_OF_COLUMNS));
+    Player player2 = new Player(2, new BattleshipBoard(GameConfiguration.NUMBER_OF_ROWS, GameConfiguration.NUMBER_OF_COLUMNS));
+
     public BattleshipGame(BattleshipBoard board) {
         this.board = board;
     }
