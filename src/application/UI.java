@@ -48,7 +48,7 @@ public class UI {
         }
         catch (BattleshipBoardException e) {
             // throw new BattleshipBoardException("Invalid position: " + e.getMessage());
-            throw new BattleshipGameException("Invalid position.");
+            throw new BattleshipGameException("Invalid position. " + e.getMessage());
         }
         catch (NumberFormatException e) {
             throw new BattleshipGameException("Problem in reading target position.");
@@ -160,38 +160,65 @@ public class UI {
     }
 
     public static void printPlayerTurn(BattleshipGame game, Scanner sc) {
+        String message = "";
+
+        boolean error;
+
+        do {
+            clearScreen();
+            printHeader();
+            printBattleshipBoard(game.getOpponent().getBoard());
+            printMessage("Turn: " + game.getCurrentPlayer());
+            printMessage(message);
+
+            try {
+                Position position = readPlayerTargetPosition(sc);
+                // if had errors before, then clear the messages
+                message = "";
+
+                if (game.checkPlayerPosition(game.getOpponent().getBoard(), position)) {
+                    message += "A ship position was hitted. In position " + BattleshipPosition.fromPosition(position) + ".";
+                }
+                else {
+                    message += "Miss!";
+                }
+
+                Ship ship = game.checkPlayerBattleships(game.getOpponent());
+
+                if (ship != null) {
+                    message += "\n\n" + ship.getShipType() + " was sunk!";
+                }
+
+                error = false;
+            }
+            catch (BattleshipBoardException e) {
+                message = "";
+                message += e.getMessage();
+                error = true;
+            }
+            catch (BattleshipGameException e) {
+                message = "";
+                message += e.getMessage();
+                error = true;
+            }
+        }
+        while(error);
+
+
+        // Updating UI with the player target position
         UI.clearScreen();
         UI.printHeader();
         UI.printBattleshipBoard(game.getOpponent().getBoard());
-        UI.printMessage("Turn: " + game.getCurrentPlayer());
+        printMessage(message);
 
-        try {
-            Position position = readPlayerTargetPosition(sc);
-            breakline();
-
-            if (game.checkPlayerPosition(game.getOpponent().getBoard(), position)) {
-                printMessage("A ship position was hitted. In position " + BattleshipPosition.fromPosition(position) + ".");
-            }
-            else {
-                printMessage("Miss!");
-            }
-
-            Ship ship = game.checkPlayerBattleships(game.getOpponent());
-
-            if (ship != null) {
-                printMessage(ship.getShipType() + " was sunk!");
-            }
+        if (game.getOpponent().getShips().size() > 0) {
+            sc.nextLine();
+            System.out.print("Press ENTER to change the turn...");
+            sc.nextLine();
         }
-        catch (BattleshipBoardException e) {
-            breakline();
-            printMessage(e.getMessage());
+        else {
+            printMessage("END OF BATTLE. " + game.getCurrentPlayer() + " won the match.");
         }
-        catch (BattleshipGameException e) {
-            breakline();
-            printMessage(e.getMessage());
-        }
-        sc.nextLine();
-        sc.nextLine();
     }
 
     public static void breakline() {
