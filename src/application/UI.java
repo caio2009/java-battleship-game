@@ -1,15 +1,15 @@
 package application;
 
 import battleship.board.Position;
-import battleship.Ship;
-import battleship.ShipPosition;
-import battleship.ShipType;
+import battleship.ship.Ship;
+import battleship.ship.ShipPosition;
+import battleship.ship.ShipType;
 import battleship.board.BattleshipBoard;
 import battleship.board.BattleshipBoardException;
 import battleship.board.BattleshipPosition;
-import config.GameConfiguration;
 import engine.BattleshipGameException;
 import engine.BattleshipGame;
+import engine.Player;
 import utils.IntegerUtil;
 
 import java.util.InputMismatchException;
@@ -33,7 +33,7 @@ public class UI {
         for (int i = 0; i < board.getRows(); i++) {
             printRow(i + 1, board.getColumns(), board);
         }
-        System.out.println();
+        breakline();
     }
 
     public static Position readPlayerTargetPosition(Scanner sc) {
@@ -48,7 +48,7 @@ public class UI {
         }
         catch (BattleshipBoardException e) {
             // throw new BattleshipBoardException("Invalid position: " + e.getMessage());
-            throw new BattleshipGameException("Invalid position.");
+            throw new BattleshipGameException("Invalid position. " + e.getMessage());
         }
         catch (NumberFormatException e) {
             throw new BattleshipGameException("Problem in reading target position.");
@@ -66,9 +66,9 @@ public class UI {
         }
     }
 
-    public static void readChooseShipPosition(Scanner sc, BattleshipGame game) {
+    public static void readChooseShipPosition(Player player, Scanner sc) {
         try {
-            ShipType type = game.getMissingShipType();
+            ShipType type = player.getMissingShipType();
 
             System.out.println("Adding new ship: " + type);
             System.out.println();
@@ -81,7 +81,7 @@ public class UI {
             System.out.println();
 
             if (direction != 1 && direction != 2) {
-                throw new BattleshipGameException("Invalid entry " + direction + ".");
+                throw new BattleshipGameException("Invalid input " + direction + ".");
             }
 
             System.out.print("Enter the ship position: ");
@@ -92,11 +92,11 @@ public class UI {
 
             Position position = new BattleshipPosition(column, row).toPosition();
 
-            game.addShip(type, direction, position);
+            player.newShip(type, direction, position);
         }
         catch (InputMismatchException e) {
             sc.nextLine();
-            throw new BattleshipGameException("Invalid entry.");
+            throw new BattleshipGameException("Can't input text on direction input.");
         }
         catch (NumberFormatException e) {
             throw new BattleshipGameException("Problem in reading ship position.");
@@ -104,6 +104,125 @@ public class UI {
         catch (ArrayIndexOutOfBoundsException e) {
             throw new BattleshipBoardException("Ship can't stay out of board.");
         }
+    }
+
+    public static void printSetPlayerShipPosition(Player player, Scanner sc) {
+        String message = "";
+
+        while (player.getShips().size() < BattleshipGame.getLimitNumberOfShips()) {
+            clearScreen();
+            printHeader();
+            printBattleshipBoard(player.getBoard());
+
+            printMessage("Setting " + player + " Ship Positions");
+            printMessage(message);
+
+            try {
+                UI.readChooseShipPosition(player, sc);
+
+                message = "";
+
+                clearScreen();
+                printHeader();
+                printBattleshipBoard(player.getBoard());
+
+                System.out.println("Are you sure about that position?\n");
+                System.out.print("Press ENTER to continue or [c] to cancel: ");
+                sc.nextLine(); // clean buffer
+                String response = sc.nextLine();
+
+                if (response.isEmpty()) {
+                    // Do nothing, just continue
+                }
+                // Undo the choosed ship position
+                else  {
+                    // Remove ship from game ship list
+                    Ship shipToRemove = player.getShips().get(player.getShips().size() - 1);
+                    player.getShips().remove(shipToRemove);
+
+                    // Remove ship position from board matrix
+                    for (ShipPosition shipPosition : shipToRemove.getShipPositions()) {
+                        int row = shipPosition.getPosition().getRow();
+                        int column = shipPosition.getPosition().getColumn();
+                        player.getBoard().getMatrix()[row][column] = null;
+                    }
+                }
+            }
+            catch (BattleshipGameException e) {
+                message = "";
+                message += e.getMessage();
+            }
+            catch (BattleshipBoardException e) {
+                message = "";
+                message += e.getMessage();
+            }
+        }
+    }
+
+    public static void printPlayerTurn(BattleshipGame game, Scanner sc) {
+        String message = "";
+
+        boolean error;
+
+        do {
+            clearScreen();
+            printHeader();
+            printBattleshipBoard(game.getOpponent().getBoard());
+            printMessage("Turn: " + game.getCurrentPlayer());
+            printMessage(message);
+
+            try {
+                Position position = readPlayerTargetPosition(sc);
+                // if had errors before, then clear the messages
+                message = "";
+
+                if (game.checkPlayerPosition(game.getOpponent().getBoard(), position)) {
+                    message += "A ship position was hitted. In position " + BattleshipPosition.fromPosition(position) + ".";
+                }
+                else {
+                    message += "Miss!";
+                }
+
+                Ship ship = game.checkPlayerBattleships(game.getOpponent());
+
+                if (ship != null) {
+                    message += "\n\n" + ship.getShipType() + " was sunk!";
+                }
+
+                error = false;
+            }
+            catch (BattleshipBoardException e) {
+                message = "";
+                message += e.getMessage();
+                error = true;
+            }
+            catch (BattleshipGameException e) {
+                message = "";
+                message += e.getMessage();
+                error = true;
+            }
+        }
+        while(error);
+
+
+        // Updating UI with the player target position
+        UI.clearScreen();
+        UI.printHeader();
+        UI.printBattleshipBoard(game.getOpponent().getBoard());
+        printMessage(message);
+
+        if (game.getOpponent().getShips().size() > 0) {
+            sc.nextLine();
+            System.out.print("Press ENTER to change the turn...");
+            sc.nextLine();
+        }
+        else {
+            printMessage("END OF BATTLE. " + game.getCurrentPlayer() + " won the match.");
+        }
+    }
+
+    public static void breakline() {
+        System.out.println();
     }
 
     private static void printRow(int rowIndex, int columns, BattleshipBoard board) {

@@ -1,4 +1,4 @@
-package battleship;
+package battleship.ship;
 
 import battleship.board.Position;
 

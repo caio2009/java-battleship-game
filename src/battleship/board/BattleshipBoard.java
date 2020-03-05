@@ -1,8 +1,8 @@
 package battleship.board;
 
-import battleship.Ship;
-import battleship.ShipPosition;
-import battleship.ShipType;
+import battleship.ship.Ship;
+import battleship.ship.ShipPosition;
+import battleship.ship.ShipType;
 import config.GameConfiguration;
 
 import java.util.ArrayList;
@@ -32,6 +32,24 @@ public class BattleshipBoard {
     }
 
     public void placeShip(Ship ship, int direction, Position refPosition) {
+        // Check if there are not occupied positions
+        // Horizontal
+        if (direction == 1) {
+            for (int i = 0; i < shipPositionNumber(ship.getShipType()); i++) {
+                if (checkPosition(new Position(refPosition.getRow(), refPosition.getColumn() + i)) != null) {
+                    throw new BattleshipBoardException("Can't set position to this ship. Because it's already occupied.");
+                }
+            }
+        }
+        // Vertical
+        else {
+            for (int i = 0; i < shipPositionNumber(ship.getShipType()); i++) {
+                if (checkPosition(new Position(refPosition.getRow() + i, refPosition.getColumn())) != null) {
+                    throw new BattleshipBoardException("Can't set position to this ship. Because it's already occupied.");
+                }
+            }
+        }
+
         List<ShipPosition> shipPositions = new ArrayList<>();
 
         // Horizontal
@@ -44,10 +62,6 @@ public class BattleshipBoard {
 
             for (int i = 0; i < shipPositionNumber(ship.getShipType()); i++) {
                 Position position = new Position(refPosition.getRow(), refPosition.getColumn() + i);
-
-                if (checkPosition(position) != null) {
-                    throw new BattleshipBoardException("Can't set position to this ship. Because it's already occupied.");
-                }
 
                 ShipPosition shipPosition = new ShipPosition(position, true);
 
@@ -80,7 +94,7 @@ public class BattleshipBoard {
         ship.setShipPositions(shipPositions);
     }
 
-    public boolean checkPositionValidation(Position refPosition, int direction, ShipType type) {
+    public boolean checkPositionAround(Position refPosition, int direction, ShipType type) {
         boolean validation = true;
         // Horizontal
         if (direction == 1) {
@@ -158,7 +172,7 @@ public class BattleshipBoard {
         // Vertical
         else {
             for (int i = 0; i < shipPositionNumber(type); i++) {
-                Position position = new Position(refPosition.getRow(), refPosition.getColumn() + i);
+                Position position = new Position(refPosition.getRow() + i, refPosition.getColumn());
                 if (i == 0) {
                     // up
                     if (checkPosition(new Position(position.getRow() - 1, position.getColumn())) != null) {
