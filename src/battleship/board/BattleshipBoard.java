@@ -1,8 +1,8 @@
 package battleship.board;
 
-import battleship.Ship;
-import battleship.ShipPosition;
-import battleship.ShipType;
+import battleship.ship.Ship;
+import battleship.ship.ShipPosition;
+import battleship.ship.ShipType;
 import config.GameConfiguration;
 
 import java.util.ArrayList;

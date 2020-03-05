@@ -1,6 +1,4 @@
-package battleship;
-
-import engine.BattleshipGame;
+package battleship.ship;
 
 import java.util.List;
 

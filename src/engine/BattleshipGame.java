@@ -1,10 +1,10 @@
 package engine;
 
-import battleship.ShipType;
+import battleship.ship.ShipType;
 import battleship.board.BattleshipBoardException;
 import battleship.board.Position;
-import battleship.Ship;
-import battleship.ShipPosition;
+import battleship.ship.Ship;
+import battleship.ship.ShipPosition;
 import battleship.board.BattleshipBoard;
 import config.GameConfiguration;
 
