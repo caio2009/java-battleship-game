@@ -30,7 +30,7 @@ public class Player {
 
     public void newShip(ShipType type, int direction, Position position) {
         // direction: 1-Horizontal   2-Vertical
-        if(!board.checkPositionValidation(position, direction, type)) {
+        if(!board.checkPositionAround(position, direction, type)) {
             throw new BattleshipBoardException("The ship can't touch other ship.");
         }
 
