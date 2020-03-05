@@ -19,9 +19,12 @@ public class BattleshipGame {
 
     Player player1 = new Player(1, new BattleshipBoard(GameConfiguration.NUMBER_OF_ROWS, GameConfiguration.NUMBER_OF_COLUMNS));
     Player player2 = new Player(2, new BattleshipBoard(GameConfiguration.NUMBER_OF_ROWS, GameConfiguration.NUMBER_OF_COLUMNS));
+    Player currentPlayer;
 
     public BattleshipGame(BattleshipBoard board) {
         this.board = board;
+
+        this.currentPlayer = player1;
     }
 
     public boolean checkPlayerPosition(Position position) {
@@ -109,6 +112,18 @@ public class BattleshipGame {
                 shipPosition.setMarker(false);
             });
         });
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public Player getNextPlayer() {
+        return (getCurrentPlayer() == player1) ? player2 : player1;
     }
 
     public BattleshipBoard getBoard() {
