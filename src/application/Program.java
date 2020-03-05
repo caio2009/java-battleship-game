@@ -17,61 +17,24 @@ public class Program {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        BattleshipBoard board = new BattleshipBoard(GameConfiguration.NUMBER_OF_ROWS, GameConfiguration.NUMBER_OF_COLUMNS);
-        BattleshipGame game = new BattleshipGame(board);
+        BattleshipGame game = new BattleshipGame();
         String message = "";
 
-        while(game.getShips().size() < game.getLimitNumberOfShips()) {
-            UI.clearScreen();
-            UI.printHeader();
-            UI.printBattleshipBoard(board);
+        // Setting the players ship position
+        UI.printSetPlayerShipPosition(game.getCurrentPlayer(), sc);
+        game.nextPlayer();
+        UI.printSetPlayerShipPosition(game.getCurrentPlayer(), sc);
 
-            UI.printMessage(message);
+        game.hideAllPlayersShips();
+        game.nextPlayer();
 
-            try {
-                UI.readChooseShipPosition(sc, game);
-
-                message = "";
-
-                UI.clearScreen();
-                UI.printHeader();
-                UI.printBattleshipBoard(board);
-
-                System.out.println("Are you sure about that position?\n");
-                System.out.print("Press ENTER to continue or [c] to cancel: ");
-                sc.nextLine(); // clean buffer
-                String response = sc.nextLine();
-
-                if (response.isEmpty()) {
-                    // Do nothing, just continue
-                }
-                // Undo the choosed ship position
-                else  {
-                    // Remove ship from game ship list
-                    Ship shipToRemove = game.getShips().get(game.getShips().size() - 1);
-                    game.getShips().remove(shipToRemove);
-
-                    // Remove ship position from board matrix
-                    for (ShipPosition shipPosition : shipToRemove.getShipPositions()) {
-                        int row = shipPosition.getPosition().getRow();
-                        int column = shipPosition.getPosition().getColumn();
-                        game.getBoard().getMatrix()[row][column] = null;
-                    }
-                }
-            }
-            catch (BattleshipGameException e) {
-                message = "";
-                message += e.getMessage();
-            }
-            catch (BattleshipBoardException e) {
-                message = "";
-                message += e.getMessage();
-            }
+        // Starting the battle
+        while (!game.isOver()) {
+            UI.printPlayerTurn(game, sc);
+            game.nextPlayer();
         }
 
-        game.hideAllShip();
-
-        while(game.getShips().size() > 0) {
+        /*while(game.getShips().size() > 0) {
             UI.clearScreen();
             UI.printHeader();
             UI.printBattleshipBoard(board);
@@ -104,12 +67,7 @@ public class Program {
                 message = "";
                 message += e.getMessage();
             }
-        }
-
-        UI.clearScreen();
-        UI.printHeader();
-        UI.printBattleshipBoard(board);
-        UI.printMessage(message);
+        }*/
 
         sc.close();
     }

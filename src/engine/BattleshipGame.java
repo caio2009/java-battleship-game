@@ -12,22 +12,16 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class BattleshipGame {
-
-    BattleshipBoard board;
-    List<Ship> ships = new ArrayList<>();
-    List<Ship> sunkShips = new ArrayList<>();
-
     Player player1 = new Player(1, new BattleshipBoard(GameConfiguration.NUMBER_OF_ROWS, GameConfiguration.NUMBER_OF_COLUMNS));
     Player player2 = new Player(2, new BattleshipBoard(GameConfiguration.NUMBER_OF_ROWS, GameConfiguration.NUMBER_OF_COLUMNS));
     Player currentPlayer;
 
-    public BattleshipGame(BattleshipBoard board) {
-        this.board = board;
-
+    public BattleshipGame() {
         this.currentPlayer = player1;
     }
 
-    public boolean checkPlayerPosition(Position position) {
+    // Check if the position entered by player hitted a ship position
+    public boolean checkPlayerPosition(BattleshipBoard board, Position position) {
         if (!board.positionExists(position)) {
             throw new BattleshipGameException("Invalid position!");
         }
@@ -41,11 +35,11 @@ public class BattleshipGame {
         return false;
     }
 
-    // Check if battleships were sunk, so add to sunkShips list
-    public Ship checkBattleships() {
+    // Check if player battleships were sunk, so add to sunkShips list
+    public Ship checkPlayerBattleships(Player player) {
         Ship markedShip = null; // marked ship which was sunk
 
-        for (Ship ship : ships) {
+        for (Ship ship : player.getShips()) {
             boolean wasSunk = true;
 
             for (ShipPosition shipPosition : ship.getShipPositions()) {
@@ -57,61 +51,36 @@ public class BattleshipGame {
 
             if (wasSunk) {
                 // check if the ship already have been sunk
-                if (!sunkShips.contains(ship)) {
+                if (!player.getSunkShips().contains(ship)) {
                     markedShip = ship;
                 }
             }
         }
 
         if (markedShip != null) {
-            ships.remove(markedShip);
-            sunkShips.add(markedShip);
+            player.getShips().remove(markedShip);
+            player.getSunkShips().add(markedShip);
             return markedShip;
         }
         return null;
     }
 
-    public void addShip(ShipType type, int direction, Position position) {
-        // direction: 1-Horizontal   2-Vertical
-        if(!board.checkPositionValidation(position, direction, type)) {
-            throw new BattleshipBoardException("The ship can't touch other ship.");
-        }
-
-        Ship ship = new Ship(type);
-        board.placeShip(ship, direction, position);
-        ships.add(ship);
+    public void hideAllPlayersShips() {
+        player1.hideAllShip();
+        player2.hideAllShip();
     }
 
-    public int getNumberOfShipsByType(ShipType type) {
-        List<Ship> filterdShips = ships.stream().filter(ship -> ship.getShipType() == type).collect(Collectors.toList());
-        return filterdShips.size();
+    public boolean isOver() {
+        return player1.getShips().size() == 0 || player2.getShips().size() == 0;
     }
 
-    // Get ship type that is missing in the game order by ships position quantity
-    public ShipType getMissingShipType() {
-        if (getNumberOfShipsByType(ShipType.CARRIER) < GameConfiguration.NUMBER_OF_CARRIERS) return ShipType.CARRIER;
-        if (getNumberOfShipsByType(ShipType.BATTLESHIP) < GameConfiguration.NUMBER_OF_BATTLESHIPS) return ShipType.BATTLESHIP;
-        if (getNumberOfShipsByType(ShipType.DESTROYER) < GameConfiguration.NUMBER_OF_DESTROYERS) return ShipType.DESTROYER;
-        if (getNumberOfShipsByType(ShipType.SUBMARINE) < GameConfiguration.NUMBER_OF_SUBMARINES) return ShipType.SUBMARINE;
-        return ShipType.PATROLBOAT;
-    }
-
-    public int getLimitNumberOfShips() {
+    public static int getLimitNumberOfShips() {
         return
                 GameConfiguration.NUMBER_OF_CARRIERS
                 + GameConfiguration.NUMBER_OF_BATTLESHIPS
                 + GameConfiguration.NUMBER_OF_DESTROYERS
                 + GameConfiguration.NUMBER_OF_SUBMARINES
                 + GameConfiguration.NUMBER_OF_PATROL_BOATS;
-    }
-
-    // Mark all ship positions marker of ship list with false
-    public void hideAllShip() {
-        ships.forEach(x -> {
-            x.getShipPositions().forEach(shipPosition -> {
-                shipPosition.setMarker(false);
-            });
-        });
     }
 
     public Player getCurrentPlayer() {
@@ -122,20 +91,13 @@ public class BattleshipGame {
         this.currentPlayer = currentPlayer;
     }
 
-    public Player getNextPlayer() {
-        return (getCurrentPlayer() == player1) ? player2 : player1;
+    public Player getOpponent() {
+        return getCurrentPlayer() == player1 ? player2 : player1;
     }
 
-    public BattleshipBoard getBoard() {
-        return board;
-    }
-
-    public List<Ship> getShips() {
-        return ships;
-    }
-
-    public List<Ship> getSunkShips() {
-        return sunkShips;
+    public void nextPlayer() {
+        Player nextPlayer = getCurrentPlayer() == player1 ? player2 : player1;
+        setCurrentPlayer(nextPlayer);
     }
 
 }
